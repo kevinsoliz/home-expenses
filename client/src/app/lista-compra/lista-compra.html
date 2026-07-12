@@ -16,11 +16,13 @@
 
     <div class="rounded-xl border border-gray-200 p-4">
         @if (muestraInput()) {
-            <form class="flex items-center gap-2" (submit)="$event.preventDefault(); agregarNuevoProducto(nombreNuevoProducto.value)">
+            <form class="flex flex-col gap-2" (submit)="$event.preventDefault(); agregarNuevoProducto(nombreNuevoProducto.value)">
                 <input #nombreNuevoProducto type="text" placeholder="Nombre del producto" required autofocus
-                    class="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300" />
-                <button hlmBtn size="sm" type="submit">Añadir</button>
-                <button hlmBtn size="sm" variant="ghost" type="button" (click)="muestraInput.set(false)">Cancelar</button>
+                    class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300" />
+                <div class="flex justify-end gap-2">
+                    <button hlmBtn size="sm" variant="ghost" type="button" (click)="muestraInput.set(false)">Cancelar</button>
+                    <button hlmBtn size="sm" type="submit">Añadir</button>
+                </div>
             </form>
         } @else {
             <button hlmBtn variant="ghost" class="w-full text-sm text-gray-500" (click)="muestraInput.set(true)">

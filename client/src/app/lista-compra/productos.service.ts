@@ -5,7 +5,7 @@ import { Producto } from './producto';
 @Injectable({ providedIn: 'root' })
 export class ProductosService {
   // TODO: mover a environment/variable cuando se despliegue.
-  private readonly apiUrl = 'http://localhost:8000';
+  private readonly apiUrl = 'http://192.168.18.174:8000';
 
   constructor(private http: HttpClient) {}
 

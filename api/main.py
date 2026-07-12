@@ -20,7 +20,7 @@ app = FastAPI(title="home-expenses API", lifespan=lifespan)
 #TODO: el origen tiene que ser una variable cuando se vaya a desplegar.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=["http://localhost:4200", "http://192.168.18.174:4200"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
