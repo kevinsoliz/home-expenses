@@ -12,4 +12,8 @@ export class ProductosService {
   getProductos() {
     return this.http.get<Producto[]>(`${this.apiUrl}/productos`);
   }
+
+  crearProducto(nombre: string) {
+    return this.http.post<Producto>(`${this.apiUrl}/productos`, { nombre });
+  }
 }

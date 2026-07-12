@@ -12,6 +12,10 @@ class Producto(SQLModel, table=True):
     precio: float | None = Field(default=None)
 
 
+class ProductoCreate(SQLModel):
+    nombre: str
+
+
 class ItemListacompra(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     producto_id: int | None = Field(default=None, foreign_key="producto.id")

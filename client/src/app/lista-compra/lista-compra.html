@@ -2,7 +2,7 @@
 
     <div class="rounded-xl border border-gray-200 p-4">
         <h1 class="text-xl font-semibold mb-4">Qué falta?</h1>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
             @for (producto of productos(); track producto.id) {
                 <li class="py-3 flex items-center justify-between">
                     {{ producto.nombre }}
@@ -12,6 +12,21 @@
                 </li>
             }
         </ul>
+    </div>
+
+    <div class="rounded-xl border border-gray-200 p-4">
+        @if (muestraInput()) {
+            <form class="flex items-center gap-2" (submit)="$event.preventDefault(); agregarNuevoProducto(nombreNuevoProducto.value)">
+                <input #nombreNuevoProducto type="text" placeholder="Nombre del producto" required autofocus
+                    class="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300" />
+                <button hlmBtn size="sm" type="submit">Añadir</button>
+                <button hlmBtn size="sm" variant="ghost" type="button" (click)="muestraInput.set(false)">Cancelar</button>
+            </form>
+        } @else {
+            <button hlmBtn variant="ghost" class="w-full text-sm text-gray-500" (click)="muestraInput.set(true)">
+                + Nuevo producto
+            </button>
+        }
     </div>
 
     <div class="rounded-xl border border-gray-200 p-4">

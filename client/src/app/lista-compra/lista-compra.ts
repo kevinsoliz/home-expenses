@@ -27,6 +27,15 @@ export class ListaCompra implements OnInit {
     this.productos.update(productos => productos.filter(p => p.id !== producto.id))
   }
 
+  muestraInput = signal(false);
+
+  agregarNuevoProducto(nombre: string) {
+    this.productosService.crearProducto(nombre).subscribe(producto => {
+      this.productos.update(productos => [...productos, producto])
+      this.muestraInput.set(false)
+    })
+  }
+
 
   
 }

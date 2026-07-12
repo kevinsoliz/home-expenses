@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 
 from database import create_db_and_tables, get_session
-from models import Persona, Producto
+from models import Persona, Producto, ProductoCreate
 
 
 @asynccontextmanager
@@ -49,3 +49,11 @@ def lista_persona(session: SessionDep, id: int) -> Persona:
 @app.get("/productos")
 def listar_productos(session: SessionDep) -> list[Producto]:
     return session.exec(select(Producto)).all()
+
+@app.post("/productos")
+def crear_producto(session: SessionDep, producto: ProductoCreate) -> Producto:
+    nuevo_producto = Producto(nombre=producto.nombre)
+    session.add(nuevo_producto)
+    session.commit()
+    session.refresh(nuevo_producto) 
+    return nuevo_producto
