@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session, select
 
 from database import create_db_and_tables, get_session
-from models import Persona
+from models import Persona, Producto
 
 
 @asynccontextmanager
@@ -38,3 +38,6 @@ def lista_persona(session: SessionDep, id: int) -> Persona:
     
     return persona
 
+@app.get("/productos")
+def listar_productos(session: SessionDep) -> list[Producto]:
+    return session.exec(select(Producto)).all()
