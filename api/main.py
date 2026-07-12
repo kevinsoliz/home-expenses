@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 
 from database import create_db_and_tables, get_session
@@ -16,6 +17,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="home-expenses API", lifespan=lifespan)
 
+#TODO: el origen tiene que ser una variable cuando se vaya a desplegar.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
