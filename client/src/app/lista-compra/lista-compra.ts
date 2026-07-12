@@ -16,4 +16,10 @@ export class ListaCompra {
     { id: 4, nombre: 'Manzanas' },
     { id: 5, nombre: 'Arroz' },
   ];
+
+  listaCompra: Producto[] = []
+  agregarProducto(producto: Producto){
+    this.listaCompra = [...this.listaCompra, producto]
+    this.productos = this.productos.filter(p => p.id !== producto.id)
+  }
 }
