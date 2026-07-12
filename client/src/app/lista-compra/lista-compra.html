@@ -1,0 +1,13 @@
+<div class="max-w-md mx-auto px-4 py-6 border border-black">
+    <h1 class="text-xl font-semibold mb-4">Lista de la compra</h1>
+    <ul class="divide-y divide-gray-200">
+        @for (producto of productos; track producto.id) {
+            <li class="py-3 flex items-center justify-between">
+                {{ producto.nombre }}
+                <button hlmBtn size="icon" variant="ghost" class="rounded-full text-gray-400 hover:text-gray-900">
+                    <lucide-icon name="plus" [size]="18" [strokeWidth]="2"></lucide-icon>
+                </button>
+            </li>
+        }
+    </ul>
+</div>
