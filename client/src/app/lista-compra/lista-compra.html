@@ -1,51 +1,78 @@
 <div class="max-w-md mx-auto px-4 py-6 space-y-6">
+  <div class="rounded-xl border border-gray-200 p-4">
+    @if (muestraInput()) {
+      <form
+        class="flex flex-col gap-2"
+        (submit)="$event.preventDefault(); agregarNuevoProducto(nombreNuevoProducto.value)"
+      >
+        <input
+          #nombreNuevoProducto
+          type="text"
+          placeholder="Nombre del producto"
+          required
+          autofocus
+          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+        />
+        <div class="flex justify-end gap-2">
+          <button hlmBtn size="sm" variant="ghost" type="button" (click)="muestraInput.set(false)">
+            Cancelar
+          </button>
+          <button hlmBtn size="sm" type="submit">Añadir</button>
+        </div>
+      </form>
+    } @else {
+      <div class="flex gap-2">
+        <button hlmBtn class="flex-1 gap-1" (click)="muestraInput.set(true)">
+          <lucide-icon name="plus" [size]="18" [strokeWidth]="2"></lucide-icon>
+          Nuevo
+        </button>
+        <button hlmBtn class="flex-1">Terminar</button>
+      </div>
+    }
+  </div>
 
-    <div class="rounded-xl border border-gray-200 p-4">
-        <h1 class="text-xl font-semibold mb-4">Qué falta?</h1>
-        <ul class="divide-y divide-gray-200 max-h-64 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
-            @for (producto of productos(); track producto.id) {
-                <li class="py-3 flex items-center justify-between">
-                    {{ producto.nombre }}
-                    <button hlmBtn size="icon" variant="ghost" class="rounded-full text-gray-400" (click)="agregarProducto(producto)">
-                        <lucide-icon name="plus" [size]="18" [strokeWidth]="2"></lucide-icon>
-                    </button>
-                </li>
-            }
-        </ul>
-    </div>
+  <div class="rounded-xl border border-gray-200 p-4">
+    <h1 class="text-xl font-semibold mb-4">Qué falta?</h1>
+    <ul
+      class="divide-y divide-gray-200 max-h-64 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden"
+    >
+      @for (producto of productos(); track producto.id) {
+        <li class="py-3 flex items-center justify-between">
+          {{ producto.nombre }}
+          <button
+            hlmBtn
+            size="icon"
+            variant="ghost"
+            class="rounded-full text-gray-400 active:bg-gray-200 active:text-gray-900 transition"
+            (click)="agregarProducto(producto)"
+          >
+            <lucide-icon name="plus" [size]="18" [strokeWidth]="2"></lucide-icon>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
 
-    <div class="rounded-xl border border-gray-200 p-4">
-        @if (muestraInput()) {
-            <form class="flex flex-col gap-2" (submit)="$event.preventDefault(); agregarNuevoProducto(nombreNuevoProducto.value)">
-                <input #nombreNuevoProducto type="text" placeholder="Nombre del producto" required autofocus
-                    class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300" />
-                <div class="flex justify-end gap-2">
-                    <button hlmBtn size="sm" variant="ghost" type="button" (click)="muestraInput.set(false)">Cancelar</button>
-                    <button hlmBtn size="sm" type="submit">Añadir</button>
-                </div>
-            </form>
-        } @else {
-            <button hlmBtn variant="ghost" class="w-full text-sm text-gray-500" (click)="muestraInput.set(true)">
-                + Nuevo producto
+  <div class="rounded-xl border border-gray-200 p-4">
+    <h2 class="text-xl font-semibold mb-4">Lista de la compra</h2>
+    <ul class="divide-y divide-gray-200">
+      @for (item of listaCompra; track item.producto.id) {
+        <li class="py-3 flex items-center justify-between">
+          {{ item.producto.nombre }}
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-500">{{ item.cantidad }}</span>
+            <button
+              hlmBtn
+              size="icon"
+              variant="ghost"
+              class="rounded-full text-gray-400 active:bg-gray-200 active:text-gray-900 transition"
+              (click)="quitarProducto(item)"
+            >
+              <lucide-icon name="minus" [size]="18" [strokeWidth]="2"></lucide-icon>
             </button>
-        }
-    </div>
-
-    <div class="rounded-xl border border-gray-200 p-4">
-        <h2 class="text-xl font-semibold mb-4">Lista de la compra</h2>
-        <ul class="divide-y divide-gray-200">
-            @for (item of listaCompra; track item.producto.id) {
-                <li class="py-3 flex items-center justify-between">
-                    {{ item.producto.nombre }}
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm text-gray-500">{{ item.cantidad }}</span>
-                        <button hlmBtn size="icon" variant="ghost" class="rounded-full text-gray-400" (click)="quitarProducto(item)">
-                            <lucide-icon name="minus" [size]="18" [strokeWidth]="2"></lucide-icon>
-                        </button>
-                    </div>
-                </li>
-
-            }
-        </ul>
-    </div>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
 </div>
