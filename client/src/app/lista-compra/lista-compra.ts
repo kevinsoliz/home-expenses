@@ -21,15 +21,20 @@ export class ListaCompra implements OnInit {
 
   listaCompra: ItemListaCompra[] = []
   agregarProducto(producto: Producto){
-    let item: ItemListaCompra = { producto, cantidad: 1}
-
-    this.listaCompra = [...this.listaCompra, item]
-    this.productos.update(productos => productos.filter(p => p.id !== producto.id))
+    const existente = this.listaCompra.find(i => i.producto.id === producto.id)
+    if (existente) {
+      existente.cantidad++
+      this.listaCompra = [...this.listaCompra]
+    } else {
+      this.listaCompra = [...this.listaCompra, { producto, cantidad: 1 }]
+    }
   }
 
   quitarProducto(item: ItemListaCompra){
-    this.listaCompra = this.listaCompra.filter(i => i.producto.id !== item.producto.id)
-    this.productos.update(productos => [...productos, item.producto])
+    item.cantidad--
+    this.listaCompra = item.cantidad <= 0
+      ? this.listaCompra.filter(i => i.producto.id !== item.producto.id)
+      : [...this.listaCompra]
   }
 
   muestraInput = signal(false);
