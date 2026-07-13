@@ -28,7 +28,8 @@ class ItemListacompra(SQLModel, table=True):
 class ListaCompra(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     fecha: date
-    total: float
+    total: float = 0
+    pagada: bool = Field(default=False)
     persona_id: int | None = Field(default=None, foreign_key="persona.id")
 
 
