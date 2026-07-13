@@ -27,6 +27,11 @@ export class ListaCompra implements OnInit {
     this.productos.update(productos => productos.filter(p => p.id !== producto.id))
   }
 
+  quitarProducto(item: ItemListaCompra){
+    this.listaCompra = this.listaCompra.filter(i => i.producto.id !== item.producto.id)
+    this.productos.update(productos => [...productos, item.producto])
+  }
+
   muestraInput = signal(false);
 
   agregarNuevoProducto(nombre: string) {
