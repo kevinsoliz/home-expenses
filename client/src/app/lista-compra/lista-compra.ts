@@ -24,9 +24,9 @@ export class ListaCompra implements OnInit {
     const existente = this.listaCompra.find(i => i.producto.id === producto.id)
     if (existente) {
       existente.cantidad++
-      this.listaCompra = [...this.listaCompra]
+      this.listaCompra = [existente, ...this.listaCompra.filter(i => i !== existente)]
     } else {
-      this.listaCompra = [...this.listaCompra, { producto, cantidad: 1 }]
+      this.listaCompra = [{ producto, cantidad: 1 }, ...this.listaCompra]
     }
   }
 
