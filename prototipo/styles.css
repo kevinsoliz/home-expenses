@@ -1,0 +1,181 @@
+/* ── tokens (paleta dataviz de referencia, modo claro/oscuro) ── */
+:root {
+  color-scheme: light;
+  --papel: #f9f8f4;
+  --superficie: #fcfcfb;
+  --tinta: #0b0b0b;
+  --tinta-2: #52514e;
+  --apagado: #898781;
+  --rejilla: #e1e0d9;
+  --eje: #c3c2b7;
+  --borde: rgba(11, 11, 11, 0.10);
+  --s1: #2a78d6;  /* Mercadona */
+  --s2: #008300;  /* Lidl */
+  --s3: #e87ba4;  /* Carrefour */
+  --bien: #006300;
+  --mal: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --papel: #0d0d0d;
+    --superficie: #1a1a19;
+    --tinta: #ffffff;
+    --tinta-2: #c3c2b7;
+    --rejilla: #2c2c2a;
+    --eje: #383835;
+    --borde: rgba(255, 255, 255, 0.10);
+    --s1: #3987e5;
+    --s3: #d55181;
+    --bien: #0ca30c;
+    --mal: #e66767;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  max-width: 920px;
+  margin-inline: auto;
+  padding: 0 16px 48px;
+}
+
+/* ── cabecera: aire de libreta de cuentas ── */
+header { padding: 32px 0 0; border-bottom: 1px solid var(--tinta); }
+h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 34px;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+h1 em { font-style: italic; font-weight: 400; color: var(--tinta-2); }
+
+nav { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 10px; }
+nav a {
+  color: var(--tinta-2);
+  text-decoration: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding: 2px 0;
+}
+nav a.activa { color: var(--tinta); box-shadow: 0 2px 0 var(--s1); }
+
+h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
+  margin: 32px 0 12px;
+}
+h2:first-child { margin-top: 24px; }
+
+/* ── tarjetas y fichas ── */
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.fichas { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.etiqueta {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--apagado);
+  margin-bottom: 4px;
+}
+.valor { font-size: 26px; font-weight: 600; }
+.heroe { font-size: 52px; font-weight: 600; line-height: 1.1; }
+.delta { font-size: 13px; font-weight: 600; }
+.bien { color: var(--bien); }
+.mal { color: var(--mal); }
+.apagado { color: var(--apagado); }
+.pequeno { font-size: 13px; color: var(--tinta-2); }
+
+/* ── tablas ── */
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--apagado);
+  font-weight: 500;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--eje);
+}
+td { padding: 8px; border-bottom: 1px solid var(--rejilla); vertical-align: middle; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: none; }
+tr.clicable { cursor: pointer; }
+tr.clicable:hover td { background: var(--rejilla); }
+
+/* ── formularios ── */
+form.linea { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+label.campo { display: flex; flex-direction: column; gap: 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--apagado); }
+input, select {
+  font: inherit;
+  color: var(--tinta);
+  background: var(--superficie);
+  border: 1px solid var(--eje);
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+input:focus, select:focus { outline: 2px solid var(--s1); outline-offset: -1px; }
+input[type="number"] { width: 96px; text-align: right; }
+
+button {
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid var(--tinta);
+  background: transparent;
+  color: var(--tinta);
+  padding: 7px 14px;
+}
+button:hover { background: var(--tinta); color: var(--papel); }
+button.primario { background: var(--tinta); color: var(--papel); }
+button.primario:hover { opacity: 0.85; }
+button.mini { padding: 1px 8px; font-size: 13px; border-color: var(--eje); }
+button.mini:hover { background: var(--rejilla); color: var(--tinta); }
+button.enlace { border: none; padding: 0; text-decoration: underline; color: inherit; font-size: inherit; }
+button.enlace:hover { background: none; color: var(--tinta); }
+
+/* ── gráficas ── */
+svg.grafica { width: 100%; height: auto; display: block; }
+.leyenda { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--tinta-2); margin-bottom: 8px; }
+.punto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.chispa { vertical-align: middle; color: var(--apagado); }
+
+/* movimientos (gastos) */
+details.mov { border-bottom: 1px solid var(--rejilla); }
+details.mov summary { list-style: none; cursor: pointer; }
+details.mov summary::-webkit-details-marker { display: none; }
+.fila-mov { display: flex; gap: 10px; align-items: baseline; padding: 9px 4px; }
+.fila-mov .fecha { color: var(--apagado); font-size: 13px; font-variant-numeric: tabular-nums; min-width: 74px; }
+.fila-mov .detalle { flex: 1; }
+.fila-mov .importe { font-variant-numeric: tabular-nums; font-weight: 600; }
+.submov { padding: 0 4px 10px 88px; font-size: 13px; color: var(--tinta-2); }
+
+#tip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--tinta);
+  color: var(--papel);
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  z-index: 10;
+  white-space: pre-line;
+}
+
+footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--eje); font-size: 12px; color: var(--apagado); }

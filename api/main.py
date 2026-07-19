@@ -1,12 +1,11 @@
 from contextlib import asynccontextmanager
-from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlmodel import Session, select
 
-from database import create_db_and_tables, get_session
-from models import Persona, Producto, ProductoCreate
+from database import create_db_and_tables
+from shared.personas.router import router as personas_router
+from shared.productos.router import router as productos_router
 
 
 @asynccontextmanager
@@ -25,35 +24,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(personas_router)
+app.include_router(productos_router)
+
+
 @app.get("/")
 def read_root():
     return {"status": "ok"}
-
-
-SessionDep = Annotated[Session, Depends(get_session)]
-
-
-@app.get("/personas")
-def listar_personas(session: SessionDep) -> list[Persona]:
-    return session.exec(select(Persona)).all()
-
-@app.get("/personas/{id}")
-def lista_persona(session: SessionDep, id: int) -> Persona:
-    persona = session.get(Persona, id)
-    
-    if persona is None :
-        raise HTTPException(status_code=404, detail="Esa persona no existe.")
-    
-    return persona
-
-@app.get("/productos")
-def listar_productos(session: SessionDep) -> list[Producto]:
-    return session.exec(select(Producto)).all()
-
-@app.post("/productos")
-def crear_producto(session: SessionDep, producto: ProductoCreate) -> Producto:
-    nuevo_producto = Producto(nombre=producto.nombre)
-    session.add(nuevo_producto)
-    session.commit()
-    session.refresh(nuevo_producto) 
-    return nuevo_producto

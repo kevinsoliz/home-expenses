@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuentas de casa · prototipo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Cuentas <em>de casa</em></h1>
+    <nav>
+      <a href="#/" data-ruta="/">Resumen</a>
+      <a href="#/lista" data-ruta="/lista">Lista de compra</a>
+      <a href="#/gastos" data-ruta="/gastos">Gastos</a>
+      <a href="#/precios" data-ruta="/precios">Precios</a>
+      <a href="#/caprichos" data-ruta="/caprichos">Caprichos</a>
+      <a href="#/ingresos" data-ruta="/ingresos">Ingresos</a>
+    </nav>
+  </header>
+
+  <main id="app"></main>
+
+  <footer>
+    prototipo · los datos viven en tu navegador (localStorage) ·
+    <button class="enlace" onclick="reiniciarDemo()">reiniciar datos de ejemplo</button>
+  </footer>
+
+  <div id="tip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
