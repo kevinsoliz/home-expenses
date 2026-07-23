@@ -1,14 +1,10 @@
-from typing import Annotated
+from fastapi import APIRouter, HTTPException
+from sqlmodel import select
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
-
-from database import get_session
+from database import SessionDep
 from .models import Persona
 
 router = APIRouter(prefix="/personas", tags=["personas"])
-
-SessionDep = Annotated[Session, Depends(get_session)]
 
 
 @router.get("")

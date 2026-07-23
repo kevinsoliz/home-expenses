@@ -1,15 +1,11 @@
-from typing import Annotated
+from fastapi import APIRouter
+from sqlmodel import select
 
-from fastapi import APIRouter, Depends
-from sqlmodel import Session, select
-
-from database import get_session
+from database import SessionDep
 from .models import Producto
 from .schemas import ProductoCreate
 
 router = APIRouter(prefix="/productos", tags=["productos"])
-
-SessionDep = Annotated[Session, Depends(get_session)]
 
 
 @router.get("")

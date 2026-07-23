@@ -1,20 +1,10 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from database import create_db_and_tables
 from shared.personas.router import router as personas_router
 from shared.productos.router import router as productos_router
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    create_db_and_tables()
-    yield
-
-
-app = FastAPI(title="home-expenses API", lifespan=lifespan)
+app = FastAPI(title="home-expenses API")
 
 #TODO: el origen tiene que ser una variable cuando se vaya a desplegar.
 app.add_middleware(
