@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.16.16" />
+    <!-- Pin de dependencias transitivas para corregir avisos NU1903 (vulnerabilidad alta).
+         Microsoft.OpenApi: vulnerable <=2.7.4 (GHSA-v5pm-xwqc-g5wc).
+         SQLitePCLRaw: vulnerable <=2.1.11 (GHSA-2m69-gcr7-jv3q). -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.12" />
+  </ItemGroup>
+
+</Project>
