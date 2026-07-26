@@ -1,4 +1,4 @@
-  {
-    "python.defaultInterpreterPath":
-  "${workspaceFolder}/api/.venv/Scripts/python.exe"
-  }
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/api/.venv/Scripts/python.exe",
+  "editor.inlineSuggest.enabled": false
+}

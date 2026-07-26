@@ -1,20 +1,33 @@
 using Microsoft.Data.Sqlite;
 
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<Db>();
+builder.Services.AddControllers();
 
 WebApplication app = builder.Build();
 
-app.MapGet("/", () => "Hello world");
+Db db = app.Services.GetRequiredService<Db>();
 
 
-SqliteConnection conn = new SqliteConnection("Data Source=mibase.db");
-await conn.OpenAsync();
+using SqliteConnection conexion = db.CrearConexion();
 
-SqliteCommand consulta = conn.CreateCommand();
+await conexion.OpenAsync();
+
+
+SqliteCommand consulta = conexion.CreateCommand();
+
+
 consulta.CommandText = "select datetime('now')";
 
+// app.MapGet("/", () => "Hello world");
+
 object? resultado = await consulta.ExecuteScalarAsync();
+
 System.Console.WriteLine($"Lahora de la bd: {resultado}");
-System.Console.WriteLine(conn.State);
+System.Console.WriteLine(conexion.State);
+
+app.MapControllers();
 
 app.Run();
