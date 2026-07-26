@@ -1,0 +1,23 @@
+
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+WebApplication app = builder.Build();
+
+Saludos saludar = new Saludos();
+
+app.MapGet("/saludar/{nombre}", (string nombre) => saludar.Saludo(nombre));
+
+
+
+// app.MapGet("/persona/{nombre}/{apellido}/{edad}", (string nombre, string apellido, int edad) => {
+//     Persona persona = new Persona(nombre, apellido, edad);
+//     Console.Beep(500, 200);
+//     Console.WriteLine(persona.ToString());
+//     return persona.ToString();
+//     });
+
+app.MapControllers();
+app.Run();

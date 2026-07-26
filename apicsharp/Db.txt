@@ -7,31 +7,29 @@ public class Db
 {
     private readonly string _connectionString;
 
-    public Db(IConfiguration configuration)
+    public Db(IConfiguration configuracion)
     {
-        _connectionString = configuration.GetConnectionString("Default")
+        _connectionString = configuracion.GetConnectionString("MiBaseDeDatos")
             ?? throw new InvalidOperationException(
                 "Falta la cadena de conexión 'Default' en appsettings.json.");
     }
 
     // Devuelve una conexión SIN abrir. Quien la pide la abre y la libera con 'using'.
     // ADO.NET mantiene un pool por debajo, así que crear conexiones es barato.
-    public SqliteConnection CreateConnection() => new(_connectionString);
+    public SqliteConnection CrearConexion() => new(_connectionString);
 
-    // Sin ORM no hay migraciones: el esquema se crea aquí, al arrancar la app.
-    // Esquema copiado de la migración de Alembic (tabla 'persona', en singular).
-    public void InitSchema()
+    public void InicializarBD()
     {
-        using SqliteConnection connection = CreateConnection();
+        using SqliteConnection connection = CrearConexion();
         connection.Open();
 
-        using SqliteCommand command = connection.CreateCommand();
-        command.CommandText = """
+        using SqliteCommand consulta = connection.CreateCommand();
+        consulta.CommandText = """
             CREATE TABLE IF NOT EXISTS persona (
                 id     INTEGER NOT NULL PRIMARY KEY,
                 nombre TEXT    NOT NULL
             );
             """;
-        command.ExecuteNonQuery();
+        consulta.ExecuteNonQuery();
     }
 }
