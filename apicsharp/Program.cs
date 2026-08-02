@@ -5,29 +5,15 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<Db>();
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ExcepcionesHandler>();
 
 WebApplication app = builder.Build();
 
 Db db = app.Services.GetRequiredService<Db>();
+db.InicializaMiBD();
 
-
-using SqliteConnection conexion = db.CrearConexion();
-
-await conexion.OpenAsync();
-
-
-SqliteCommand consulta = conexion.CreateCommand();
-
-
-consulta.CommandText = "select datetime('now')";
-
-// app.MapGet("/", () => "Hello world");
-
-object? resultado = await consulta.ExecuteScalarAsync();
-
-System.Console.WriteLine($"Lahora de la bd: {resultado}");
-System.Console.WriteLine(conexion.State);
-
+app.UseExceptionHandler();
 app.MapControllers();
 
 app.Run();

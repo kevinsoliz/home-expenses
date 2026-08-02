@@ -23,7 +23,7 @@ public class PersonaRepository
     private readonly Db _db;
     public PersonaRepository(Db db) => _db = db; // se la dan hecha
 }
-```
+```/
 
 Ese "alguien" es el **contenedor de DI**: una pieza de ASP.NET Core que sabe qué instancia darle a cada clase que la pida.
 
