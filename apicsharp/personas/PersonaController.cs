@@ -1,7 +1,7 @@
 using System.Data;
+using System.Data.Common;
 using apicsharp.personas;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Data.Sqlite;
 
 [Route("personas")]
@@ -18,13 +18,13 @@ public class PersonaController : ControllerBase
     public async Task<List<Persona>> GetPersonas()
     {
         List<Persona> personas = [];
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
         consulta.CommandText = "select * from persona";
 
-        SqliteDataReader reader = await consulta.ExecuteReaderAsync();
+        DbDataReader reader = await consulta.ExecuteReaderAsync();
 
         while (reader.Read())
         {
@@ -41,15 +41,16 @@ public class PersonaController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Persona>> GetPersona(int id)
     {
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
         consulta.CommandText = "select * from persona where id = @id";
 
-        consulta.Parameters.AddWithValue("@id", id);
+        consulta.AgregarParametro("@id", id);
+       
 
-        SqliteDataReader reader = await consulta.ExecuteReaderAsync();
+        DbDataReader reader = await consulta.ExecuteReaderAsync();
 
         if (!reader.Read())
         {
@@ -66,12 +67,12 @@ public class PersonaController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> PostPersonas([FromBody] Persona persona)
     {
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
         consulta.CommandText = "insert into persona (nombre) values (@nombre)";
-        consulta.Parameters.AddWithValue("@nombre", persona.Nombre);
+        consulta.AgregarParametro("@nombre", persona.Nombre);
 
         await consulta.ExecuteNonQueryAsync();
 
@@ -81,14 +82,14 @@ public class PersonaController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePersona(int id)
     {
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
         consulta.CommandText = "delete from persona where id = @id";
 
-        consulta.Parameters.AddWithValue("@id", id);
+        consulta.AgregarParametro("@id", id);
 
         int filas = await consulta.ExecuteNonQueryAsync();
 
@@ -105,14 +106,14 @@ public class PersonaController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePersona(int id, [FromBody] Persona persona)
     {
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
 
         consulta.CommandText = "update persona set nombre = @nombre where id = @id";
-        consulta.Parameters.AddWithValue("@nombre", persona.Nombre);
-        consulta.Parameters.AddWithValue("@id", id);
+        consulta.AgregarParametro("@nombre", persona.Nombre);
+        consulta.AgregarParametro("@id", id);
 
         int filas = consulta.ExecuteNonQuery();
 
@@ -128,15 +129,15 @@ public class PersonaController : ControllerBase
     [HttpPatch("{id}")]
     public async Task<IActionResult> PatchPersona(int id, [FromBody] Persona persona)
     {
-        using SqliteConnection conexion = _db.CrearConexion();
+        using DbConnection conexion = _db.CrearConexion();
         await conexion.OpenAsync();
 
-        using SqliteCommand consulta = conexion.CreateCommand();
+        using DbCommand consulta = conexion.CreateCommand();
         consulta.CommandText = "update persona set nombre = coalesce(@nombre, nombre), apellido = coalesce(@apellido, apellido) where id = @id";
 
-        consulta.Parameters.AddWithValue("@nombre", persona.Nombre);
-        consulta.Parameters.AddWithValue("@apellido", (object?)persona.Apellido ?? DBNull.Value);
-        consulta.Parameters.AddWithValue("@id", id);
+        consulta.AgregarParametro("@nombre", persona.Nombre);
+        consulta.AgregarParametro("@apellido", persona.Apellido);
+        consulta.AgregarParametro("@id", id);
 
         int filas = consulta.ExecuteNonQuery();
 
