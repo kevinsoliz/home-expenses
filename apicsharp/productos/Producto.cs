@@ -1,0 +1,1 @@
+public record Producto (int Id, string Nombre);
