@@ -2,7 +2,8 @@ using System.Data;
 using System.Data.Common;
 using apicsharp.personas;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
+
+namespace apicsharp.personas;
 
 [Route("personas")]
 public class PersonaController : ControllerBase
